@@ -1,5 +1,6 @@
 package com.example.library.management.system.serviceImpl;
 
+import com.example.library.management.system.Config.AppLogger;
 import com.example.library.management.system.constants.APIConstant;
 import com.example.library.management.system.dtos.BookDtos;
 import com.example.library.management.system.dtos.ResponseDtos;
@@ -37,6 +38,7 @@ public class BookServiceImpl implements BookService {
             bookRepo.save(book);
             return ResponseUtils.getResponse(true, APIConstant.CREATED, HttpStatus.CREATED);
         } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -50,6 +52,7 @@ public class BookServiceImpl implements BookService {
                     .collect(Collectors.toList());
             return ResponseUtils.getResponse(true, APIConstant.API_FETCH_SUCCESSFULLY, bookDtosList,HttpStatus.CREATED);
         } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR,new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -63,6 +66,7 @@ public class BookServiceImpl implements BookService {
             }
             return ResponseUtils.getResponse(true, APIConstant.API_FETCH_SUCCESSFULLY,  mapToDto(book.get()),HttpStatus.CREATED);
         } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR,new BookDtos(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -83,6 +87,7 @@ public class BookServiceImpl implements BookService {
             bookRepo.save(book);
             return ResponseUtils.getResponse(true, APIConstant.UPDATED, HttpStatus.OK);
         } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -96,6 +101,7 @@ public class BookServiceImpl implements BookService {
             bookRepo.deleteById(id);
             return ResponseUtils.getResponse(true, APIConstant.DELETED, HttpStatus.OK);
         } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

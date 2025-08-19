@@ -1,5 +1,6 @@
 package com.example.library.management.system.serviceImpl;
 
+import com.example.library.management.system.Config.AppLogger;
 import com.example.library.management.system.constants.APIConstant;
 import com.example.library.management.system.dtos.IssueRecordDtos;
 import com.example.library.management.system.dtos.ResponseDtos;
@@ -52,9 +53,11 @@ public class IssuedRecordServiceImpl implements IssuedRecordService {
                 return ResponseUtils.getResponse(false,"Please Select The Book ", HttpStatus.BAD_REQUEST);
             }
             issuedRecordRepo.save(record);
+
             return ResponseUtils.getResponse(false, APIConstant.CREATED,HttpStatus.CREATED);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
+            return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,8 +82,9 @@ public class IssuedRecordServiceImpl implements IssuedRecordService {
             }
             issuedRecordRepo.save(record);
             return ResponseUtils.getResponse(false, APIConstant.CREATED,HttpStatus.CREATED);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
+            return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -95,7 +99,8 @@ public class IssuedRecordServiceImpl implements IssuedRecordService {
 
             IssueRecordDtos recordDto = mapToIssueRecordDto(optionalIssueRecord.get());
             return ResponseUtils.getResponse(true, APIConstant.API_FETCH_SUCCESSFULLY, recordDto, HttpStatus.OK);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR,new IssueRecordDtos(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -112,7 +117,8 @@ public class IssuedRecordServiceImpl implements IssuedRecordService {
             }
             List<IssueRecordDtos> issueRecordDtosList=optionalIssueRecord.stream().map(this::mapToIssueRecordDto).toList();
             return ResponseUtils.getResponse(true, APIConstant.API_FETCH_SUCCESSFULLY, issueRecordDtosList, HttpStatus.OK);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR,new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
