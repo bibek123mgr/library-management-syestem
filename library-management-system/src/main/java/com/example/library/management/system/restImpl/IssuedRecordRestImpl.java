@@ -1,9 +1,15 @@
 package com.example.library.management.system.restImpl;
 
+import com.example.library.management.system.dtos.IssueRecordDtos;
+import com.example.library.management.system.dtos.ResponseDtos;
+import com.example.library.management.system.entity.IssueRecord;
 import com.example.library.management.system.rest.IssuedRecordRest;
 import com.example.library.management.system.service.IssuedRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class IssuedRecordRestImpl implements IssuedRecordRest {
@@ -12,9 +18,9 @@ public class IssuedRecordRestImpl implements IssuedRecordRest {
     private IssuedRecordService issuedRecordService;
 
     @Override
-    public String createIssueRecord(IssuedRecordRest issuedRecordRest) {
+    public ResponseEntity<ResponseDtos<Void>> createIssueRecord(IssueRecordDtos issueRecordDtos) {
         try {
-            return issuedRecordService
+            return issuedRecordService.createIssueRecord(issueRecordDtos);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -23,32 +29,38 @@ public class IssuedRecordRestImpl implements IssuedRecordRest {
 
 
     @Override
-    public String updateIssueRecord(IssuedRecordRest issuedRecordRest) {
+    public ResponseEntity<ResponseDtos<Void>> updateIssueRecord(IssueRecordDtos issueRecordDtos) {
         try {
+            return issuedRecordService.updateIssueRecord(issueRecordDtos);
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+//    @Override
+//    public ResponseEntity<ResponseDtos<Void>> returnedIssueRecord(Integer id) {
+//        try {
+//            return issuedRecordService.returnedIssueRecord(id);
+//
+//        } catch (Exception ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
+
+    @Override
+    public ResponseEntity<ResponseDtos<IssueRecordDtos>> getOneIssueRecord(Integer id) {
+        try {
+            return issuedRecordService.getOneIssueRecord(id);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Override
-    public String returnedIssueRecord(Integer id) {
+    public ResponseEntity<ResponseDtos<List<IssueRecordDtos>>> getAllIssueRecordPagination() {
         try {
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public String getOneIssueRecord(IssuedRecordRest issuedRecordRest) {
-        try {
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public String getAllIssueRecordPagination(IssuedRecordRest issuedRecordRest) {
-        try {
+            return issuedRecordService.getAllIssueRecordPagination();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

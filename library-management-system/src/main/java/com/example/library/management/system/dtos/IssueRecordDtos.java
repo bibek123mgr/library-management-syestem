@@ -20,6 +20,8 @@ public class IssueRecordDtos {
 
     private Integer issuedToId;
     private String issuedToName;
+    private Boolean isReturned;
+
 
     @NotNull(message = "book is Required")
     private Integer bookId;
@@ -28,7 +30,7 @@ public class IssueRecordDtos {
 
     public IssueRecordDtos(){};
 
-    public IssueRecordDtos(Integer id, LocalDate issueDate, LocalDate dueDate, LocalDate returnedDate, Integer issuedToId, String issuedToName, Integer bookId, String bookTitle) {
+    public IssueRecordDtos(Integer id, LocalDate issueDate, LocalDate dueDate, LocalDate returnedDate, Integer issuedToId, String issuedToName, Integer bookId, String bookTitle,Boolean isReturned) {
         this.id = id;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
@@ -37,5 +39,6 @@ public class IssueRecordDtos {
         this.issuedToName = issuedToName;
         this.bookId = bookId;
         this.bookTitle = bookTitle;
+        this.isReturned=isReturned;
     }
 }
