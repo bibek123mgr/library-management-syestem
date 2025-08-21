@@ -52,9 +52,13 @@ public class IssuedRecordServiceImpl implements IssuedRecordService {
             if(book.isEmpty()){
                 return ResponseUtils.getResponse(false,"Please Select The Book ", HttpStatus.BAD_REQUEST);
             }
+            if(book.get().getQty() <= 0 || !book.get().getIsAvailable()){
+                return ResponseUtils.getResponse(false,"Book Not Available", HttpStatus.BAD_REQUEST);
+
+            }
             issuedRecordRepo.save(record);
 
-            return ResponseUtils.getResponse(false, APIConstant.CREATED,HttpStatus.CREATED);
+            return ResponseUtils.getResponse(true, APIConstant.CREATED,HttpStatus.CREATED);
         } catch (Exception e) {
             AppLogger.error(e.getMessage(),e);
             return ResponseUtils.getResponse(false, APIConstant.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -6,6 +6,7 @@ import com.example.library.management.system.dtos.ValidateTokenRequestDtos;
 import com.example.library.management.system.rest.UserRest;
 import com.example.library.management.system.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,7 +16,7 @@ public class UserRestImpl implements UserRest {
     private UserService userService;
 
     @Override
-    public ResponseDtos<Void> forgetPasswordRequest(String email) {
+    public ResponseEntity<ResponseDtos<Void>> forgetPasswordRequest(String email) {
         try{
            return userService.forgetPasswordRequest(email);
         } catch (Exception e) {
@@ -24,7 +25,7 @@ public class UserRestImpl implements UserRest {
     }
 
     @Override
-    public ResponseDtos<Void> verifyOTP(ValidateTokenRequestDtos validateTokenRequestData) {
+    public ResponseEntity<ResponseDtos<Void>> verifyOTP(ValidateTokenRequestDtos validateTokenRequestData) {
         try{
             return userService.verifyOTP(validateTokenRequestData);
         } catch (Exception e) {
@@ -33,7 +34,7 @@ public class UserRestImpl implements UserRest {
     }
 
     @Override
-    public ResponseDtos<Void> resetPassword(ResetPasswordRequestDtos resetPasswordRequestDtos) {
+    public ResponseEntity<ResponseDtos<Void>> resetPassword(ResetPasswordRequestDtos resetPasswordRequestDtos) {
         try{
             return userService.resetPassword(resetPasswordRequestDtos);
         } catch (Exception e) {

@@ -8,8 +8,11 @@ import com.example.library.management.system.dtos.UserDtos;
 import com.example.library.management.system.entity.User;
 import com.example.library.management.system.repo.UserRepo;
 import com.example.library.management.system.service.AuthService;
+import com.example.library.management.system.utils.ResponseUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,11 +26,11 @@ public class AuthServiceImpl implements AuthService {
     private AppLogger logger;
 
     @Override
-    public ResponseDtos<Void> signIn(LoginUserDtos loginData) {
+    public ResponseEntity<ResponseDtos<Void>> signIn(LoginUserDtos loginData) {
        try{
            String accessToken="";
            String refreshToken="";
-           return new ResponseDtos<>(true,APIConstant.LOGIN_SUCCESSFULLY,accessToken,refreshToken);
+           return ResponseUtils.getResponse(true,APIConstant.LOGIN_SUCCESSFULLY,accessToken,refreshToken, HttpStatus.OK);
        } catch (Exception e) {
            throw new RuntimeException(e);
        }
@@ -36,11 +39,11 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public ResponseDtos<Void> registerUser(UserDtos registerData) {
+    public ResponseEntity<ResponseDtos<Void>> registerUser(UserDtos registerData) {
         try{
             User user=mapUserRegisterData(registerData);
             userRepo.save(user);
-            return new ResponseDtos<>(true,APIConstant.CREATED);
+            return ResponseUtils.getResponse(true,APIConstant.CREATED,HttpStatus.CREATED);
         } catch (Exception e) {
             AppLogger.error(APIConstant.INTERNAL_SERVER_ERROR,e);
             throw new RuntimeException(e);
@@ -58,11 +61,11 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public ResponseDtos<Void> refreshToken(String refreshToken) {
+    public ResponseEntity<ResponseDtos<Void>> refreshToken(String refreshToken) {
         try{
             String accessToken="";
             String newRefreshToken="";
-            return new ResponseDtos<>(true,APIConstant.LOGIN_SUCCESSFULLY,accessToken,newRefreshToken);
+            return  ResponseUtils.getResponse(true,APIConstant.LOGIN_SUCCESSFULLY,accessToken,newRefreshToken,HttpStatus.OK);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

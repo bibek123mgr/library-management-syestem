@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Repository
 public interface UserRepo extends JpaRepository<User,Integer> {
+    User findByEmail(String username);
 }
