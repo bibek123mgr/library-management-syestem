@@ -17,31 +17,31 @@ public class JwtUtils {
 
     private static final String SECRET="librarymanagementSystem";
     private static final long ACCESS_TOKEN_EXPIRATION_TIME=1000*60*60;
-    private static final long REFRESH_TOKEN_EXPIRATION_TIME=1000*60*60;
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME=1000*60*60*24*7;
 
 
     private SecretKey getKey(){
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateTokenAccessToken(Integer user_id,String role){
+    public String generateTokenAccessToken(String username,String role){
         Map<String,Object> claims=new HashMap<>();
         claims.put("role",role);
-        return createToken(claims,user_id,ACCESS_TOKEN_EXPIRATION_TIME);
+        return createToken(claims,username,ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
 
-    public String generateRefreshToken(Integer user_id,String role){
+    public String generateRefreshToken(String username,String role){
         Map<String,Object> claims=new HashMap<>();
         claims.put("role",role);
-        return createToken(claims,user_id, REFRESH_TOKEN_EXPIRATION_TIME);
+        return createToken(claims,username, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
-    private String createToken(Map<String,Object> claims,Integer user_id,long EXPIRATION_TIME){
+    private String createToken(Map<String,Object> claims,String username,long EXPIRATION_TIME){
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .setSubject(String.valueOf(user_id))
+                .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(getKey())
@@ -68,17 +68,21 @@ public class JwtUtils {
         return extractClaims(token,Claims :: getSubject);
     }
 
-    public Date getExpiration(String token){
+    private Date getExpiration(String token){
         return extractClaims(token,Claims::getExpiration);
     }
 
-    private Boolean isTokenExpired(String token){
+    public Boolean isTokenExpired(String token){
         return getExpiration(token).before(new Date(System.currentTimeMillis()));
     }
 
+    public String extractRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails){
-        final String userId= extractUsername(token);
-        return userDetails.getUsername().equals(userId) && !isTokenExpired(token);
+        final String username= extractUsername(token);
+        return userDetails.getUsername().equals(username) && !isTokenExpired(token);
     }
 
 

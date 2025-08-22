@@ -14,6 +14,7 @@ package com.example.library.management.system.constants;
     public static final String UNAUTHENTICATE="Unauthenticate";
     public static final String USER_NOT_FOUND="User Not Found";
      public static final String LOGIN_SUCCESSFULLY="User Login Successfully";
+     public static final String USER_ALREADY_EXIST="User Already Exist";
 
 
 
