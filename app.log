@@ -603,3 +603,8 @@ java.lang.NullPointerException: Cannot invoke "String.startsWith(String)" becaus
 2025-08-22 20:48:25 INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2025-08-22 20:48:25 INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 2025-08-22 20:48:26 INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 704 ms
+2025-08-22 21:38:47 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-08-22 21:38:47 INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-08-22 21:38:47 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-22 21:38:47 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-08-22 21:38:47 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

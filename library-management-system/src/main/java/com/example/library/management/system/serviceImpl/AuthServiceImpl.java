@@ -71,8 +71,7 @@ public class AuthServiceImpl implements AuthService {
                 userRepo.save(user);
                 return ResponseUtils.getResponse(true, APIConstant.CREATED, HttpStatus.CREATED);
             }else{
-                return ResponseUtils.getResponse(false, APIConstant.USER_ALREADY_EXIST, HttpStatus.CREATED);
-
+                return ResponseUtils.getResponse(false, APIConstant.INVALID_CREDENTIALS, HttpStatus.BAD_REQUEST);
             }
         } catch (Exception e) {
             AppLogger.error(APIConstant.INTERNAL_SERVER_ERROR,e);
